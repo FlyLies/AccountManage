@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理系统</title>
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/login.css">
+</head>
+<body>
+    <div id="form_bg">
+        <form class="layui-form" action="" method="post">
+            <div class="welcome">欢迎使用账号管理系统</div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" id="label1">账号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="account" id="input1" required  lay-verify="required|phone" placeholder="请输入手机号" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" id="text2">
+                <label class="layui-form-label" id="label2">密码</label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" id="input2" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item" id="button1">
+                <button class="layui-btn layui-bg-blue" lay-submit lay-filter="formDemo">登录</button>
+            </div>
+        </form>
+        <div class="register"><a href="/register" style="color: blue">注册</a></div>
+    </div>
+    <script>
+        layui.use('form', function(){
+            var form = layui.form;
+            //监听提交
+            form.on('submit(formDemo)', function(data){
+                layer.msg(JSON.stringify(data.field));
+                return false;
+            });
+        });
+    </script>
+    <script src="../../lib/layui/layui.js"></script>
+</body>
+</html>

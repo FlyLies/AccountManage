@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ltr.dao.UserDao">
+    <!--查询用户-->
+    <select id="getUser" resultType="net.ltr.entity.User" parameterType="net.ltr.entity.User">
+        select * from users where identity != 'admin'<if test="uname != null and uname != ''">and uaccount like "%"#{uaccount}"%"</if>
+    </select>
+
+    <!--查询一个用户-->
+    <select id="getOneUser" resultType="net.ltr.entity.User" parameterType="net.ltr.entity.User">
+        select * from users where uaccount = #{uaccount}
+    </select>
+
+    <select id="getOneUserById" resultType="net.ltr.entity.User">
+        select * from users where id = #{id}
+    </select>
+
+    <!--修改用户密码-->
+    <update id="modifyPassword" parameterType="net.ltr.entity.User">
+        update users set upassword = #{upassword} where id = #{id}
+    </update>
+
+    <!--修改用户信息-->
+    <update id="modifyUser" parameterType="net.ltr.entity.User">
+        update users set uname = #{uname}, uaccount = #{uaccount}, upassword = #{upassword} where id = #{id}
+    </update>
+
+    <!--注册-->
+    <insert id="register" parameterType="net.ltr.entity.User">
+        insert into users(uname, uaccount, upassword, identity,des_key) VALUE (#{uname},#{uaccount},#{upassword},'user',#{des_key})
+    </insert>
+
+    <!--查询密钥是否存在-->
+    <select id="checkKey">
+        select des_key from users where des_key = #{des_key} limit 1
+    </select>
+
+    <!--删除用户-->
+    <delete id="deleteUser">
+        delete from users where id = #{id}
+    </delete>
+</mapper>

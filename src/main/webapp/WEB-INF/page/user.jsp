@@ -1,0 +1,108 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: 13534
+  Date: 2023/4/1
+  Time: 21:13
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+<head>
+    <title>账号管理系统</title>
+    <%--    <link rel="stylesheet" href="../../lib/layui/css/layui.css">--%>
+    <%--    <link rel="stylesheet" href="../../css/main.css">--%>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
+</head>
+<body>
+    <div class="first">
+        <div class="top">
+            <div class="user">
+                <span>欢迎，管理员&emsp;</span>
+                <span><a href="/toLogin" style="color: red;">注销</a></span>
+            </div>
+        </div>
+        <div class="middle">
+            <div class="left">
+                <ul style="transform: translate(0,10%)">
+                    <li class="line"><a href="/admin/user/page/1">用户信息</a></li><hr>
+                    <%--<li class="line"><a href="/modifyPassword/${user.id}">个人中心</a></li><hr>--%>
+                </ul>
+            </div>
+            <div class="right">
+                <form class="search" action="/admin/user/page/1" method="get">
+                    <input type="text" class="search_text" name="uaccount" placeholder="请输入账号" value="${user.uname}">
+                    <input type="submit" value="搜索" class="search_bottom">
+                </form>
+                <button class="add"><a href="" style="color: white">添加</a></button>
+                <div class="table_bg">
+                    <table>
+                        <tr>
+                            <th class="user_id">ID</th>
+                            <th class="user_name">用户名</th>
+                            <th class="user_account">账号</th>
+                            <th class="user_password">密码</th>
+                            <th colspan="3" class="user_operate">操作</th>
+                        </tr>
+                        <c:if test="${userPageInfo.list ne null and userPageInfo.list ne ''}">
+                            <c:forEach items="${userPageInfo.list}" var="User">
+                                <tr>
+                                    <td class="user_id">${User.id}</td>
+                                    <td class="user_name">${User.uname}</td>
+                                    <td class="user_account">${User.uaccount}</td>
+                                    <td class="user_password">${User.upassword}</td>
+                                    <td><a href="/web/${User.id}/page/1" class="web">网站管理</a></td>
+                                    <td><a href="/modifyUser/${User.id}"  class="modify">修改</a></td>
+                                    <td><a href="/userDelete/${User.id}"  class="delete">删除</a></td>
+                                </tr>
+                            </c:forEach>
+                            <div class="page">
+                                <c:if test="${userPageInfo.hasPreviousPage}">
+                                    <a href="/admin/user/page/1?uname=${user.uname}" style="color: blue">首页</a>
+                                </c:if>
+                                <c:if test="${userPageInfo.hasPreviousPage}">
+                                    <a href="/admin/user/page/${userPageInfo.prePage}?uname=${user.uname}" style="color: blue">上一页</a>
+                                </c:if>
+                                <span>
+                                        <c:forEach items="${userPageInfo.navigatepageNums}" var="num">
+                                            <c:if test="${userPageInfo.pageNum == num}">
+                                                <a href="/admin/user/page/${num}?uname=${user.uname}" style="color: red">【${num}】</a>
+                                            </c:if>
+                                            <c:if test="${userPageInfo.pageNum != num}">
+                                                <a href="/admin/user/page/${num}?uname=${user.uname}" style="color: blue">${num}</a>
+                                            </c:if>
+                                        </c:forEach>
+                                    </span>
+                                <c:if test="${userPageInfo.hasNextPage}">
+                                    <a href="/admin/user/page/${userPageInfo.nextPage}?uname=${user.uname}" style="color: blue">下一页</a>
+                                </c:if>
+                                <c:if test="${userPageInfo.hasNextPage}">
+                                    <a href="/admin/user/page/${userPageInfo.pages}?uname=${user.uname}" style="color: blue">末页</a>
+                                </c:if>
+                            </div>
+                        </c:if>
+                        <c:if test="${userPageInfo.list eq null or userPageInfo.list eq ''}">
+                            <tr>
+                                <td colspan="7" style="text-align: center;margin: auto">没有该网站</td>
+                            </tr>
+                        </c:if>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <p class="bottom">背景图来源：<a href="https://www.pixiv.net" style="color: #0000FF">Y_Y</a></p>
+    </div>
+    <script src="../../lib/layui/layui.js"></script>
+    <c:if test="${message eq '删除成功'}">
+        <script>
+            alert("删除成功!!!");
+        </script>
+    </c:if>
+    <c:if test="${message eq '删除失败'}">
+        <script>
+            alert("删除失败!!!");
+        </script>
+    </c:if>
+</body>
+</html>

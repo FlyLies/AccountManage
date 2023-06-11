@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.ltr.dao.AccountDao">
+    <!--查询个人账号（包括模糊查询）-->
+    <!--<select id="getAccount" resultType="net.ltr.entity.Account" parameterType="net.ltr.entity.Account">
+        select * from account where uid = #{uid} and wname = #{wname} <if test="waccount != null and waccount != ''">and waccount like "%"#{waccount}"%"</if>
+    </select>-->
+    <select id="getAccount" resultType="net.ltr.entity.Account" parameterType="net.ltr.entity.Account">
+        select * from account where uid = #{uid} and wname = #{wname} <if test="waccount != null and waccount != ''">and waccount = #{waccount}</if>
+    </select>
+
+    <!--查询一个账号-->
+    <select id="getOneAccount" resultType="net.ltr.entity.Account">
+        select * from account where aid = #{aid}
+    </select>
+
+    <!--查询个人网站-->
+    <select id="getWeb" resultType="net.ltr.entity.Account" parameterType="net.ltr.entity.Account">
+        select uid,wname,web from account where uid = #{uid} <if test="wname != null and wname != ''">and wname like "%"#{wname}"%"</if> group by wname,web
+    </select>
+
+    <!--查询一个网站-->
+    <select id="getOneWeb" resultType="net.ltr.entity.Account">
+        select uid,wname,web from account where uid = #{arg0} and wname = #{arg1} group by wname,web
+    </select>
+
+    <select id="getWebUrl" resultType="String">
+        select web from account where uid = #{arg0} and wname = #{arg1} group by wname
+    </select>
+
+    <!--删除网站-->
+    <delete id="deleteWeb">
+        delete from account where uid = #{arg0} and wname = #{arg1}
+    </delete>
+
+    <!--修改网站-->
+    <update id="modifyWeb">
+        update account set wname = #{arg0}, web = #{arg1} where uid = #{arg2} and wname = #{arg3}
+    </update>
+
+    <!--删除账号-->
+    <delete id="deleteAccount">
+        delete from account where aid = #{aid}
+    </delete>
+
+    <!--添加账号-->
+    <insert id="addAccount" parameterType="net.ltr.entity.Account">
+        insert into account(uid,wname,web,waccount,wpassword) value (#{uid},#{wname},#{web},#{waccount},#{wpassword})
+    </insert>
+
+    <!--修改账号-->
+    <update id="modifyAccount" parameterType="net.ltr.entity.Account">
+        update account set wname = #{wname}, web = #{web}, waccount = #{waccount}, wpassword = #{wpassword} where aid = #{aid}
+    </update>
+</mapper>

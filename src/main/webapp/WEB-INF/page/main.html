@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理系统</title>
+    <link rel="stylesheet" href="../../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../../css/main.css">
+</head>
+<body>
+<div class="first">
+    <div class="top">
+        <div class="user">
+            <span>欢迎，${user.uname}&emsp;</span>
+            <span><a href="" style="color: red;">注销</a></span>
+        </div>
+    </div>
+    <div class="middle">
+        <div class="left">
+            <ul style="transform: translate(0,10%)">
+                <li class="line"><a href="">账号</a></li><hr>
+                <li class="line"><a href="">个人中心</a></li><hr>
+            </ul>
+        </div>
+        <div class="right">
+            <form class="search" action="/account/${user.id}/page/1" method="get">
+                <input type="text" class="search_text" name="wname" placeholder="请输入网站名" value="${account.wname}">
+                <input type="submit" value="搜索" class="search_bottom">
+            </form>
+            <button class="add"><a href="/addAccount/${user.id}" style="color: white">添加</a></button>
+            <div class="table_bg">
+                <table>
+                    <tr>
+                        <th class="web_name_account">网站名</th>
+                        <th class="web_account">账号</th>
+                        <th class="web_password">密码</th>
+                        <th colspan="2" class="operate">操作</th>
+                    </tr>
+                    <c:if test="${accountPageInfo.list ne null}">
+                        <c:forEach items="${accountPageInfo.list}" var="Account">
+                            <tr>
+                                <td class="web_name_account"><a href="${Account.web}">${Account.wname}</a></td>
+                                <td class="web_account">${Account.waccount}</td>
+                                <td class="web_password">${Account.wpassword}</td>
+                                <td><a href="" class="modify">修改</a></td>
+                                <td><a href="/deleteAccount/${Account.uid}/${Account.aid}"  class="delete">删除</a></td>
+                            </tr>
+                        </c:forEach>
+                        <div class="page">
+                            <c:if test="${accountPageInfo.hasPreviousPage ne null}">
+                                <a href="/account/${user.id}/page/1?wname=${account.wname}" style="color: blue">首页</a>
+                            </c:if>
+                            <c:if test="${accountPageInfo.hasPreviousPage ne null}">
+                                <a href="/account/${user.id}/page/${accountPageInfo.prePage}?wname=${account.wname}" style="color: blue">上一页</a>
+                            </c:if>
+                            <span>
+                                    <c:forEach items="${accountPageInfo.navigatepageNums}" var="num">
+                                        <c:if test="${accountPageInfo.pageNum == num}">
+                                            <a href="/Account/${user.id}/page/${num}?wname=${account.wname}" style="color: red">【${num}】</a>
+                                        </c:if>
+                                        <c:if test="${accountPageInfo.pageNum != num}">
+                                            <a href="/Account/${user.id}/page/${num}?wname=${account.wname}" style="color: blue">${num}</a>
+                                        </c:if>
+                                    </c:forEach>
+                                </span>
+                            <c:if test="${accountPageInfo.hasNextPage ne null}">
+                                <a href="/Account/${user.id}/page/${accountPageInfo.nextPage}?wname=${account.wname}" style="color: blue">下一页</a>
+                            </c:if>
+                            <c:if test="${accountPageInfo.hasNextPage ne null}">
+                                <a href="/Account/${user.id}/page/${accountPageInfo.pages}?wname=${account.wname}" style="color: blue">末页</a>
+                            </c:if>
+                        </div>
+                    </c:if>
+                    <c:if test="${accountPageInfo.list eq null}">
+                        <tr>
+                            <td colspan="5" style="text-align: center;margin: auto">没有该网站</td>
+                        </tr>
+                    </c:if>
+                </table>
+            </div>
+        </div>
+    </div>
+    <p class="bottom">背景图来源：<a href="https://www.pixiv.net" style="color: #0000FF">Y_Y</a></p>
+</div>
+<script src="../../lib/layui/layui.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+body{
+    background-image:url(../img/back-img.jpg);
+    background-size:100%;
+    background-attachment:fixed;
+}
+.welcome{
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 300%;
+}
+#form_bg{
+    width: 30%;
+    height: 60%;
+    position: absolute;
+    margin: auto;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 10px 10px 10px 10px;
+    border: 3px solid white;
+}
+#input1,#input2,#input3{
+    width: 80%;
+}
+#label1,#label2,#label3{
+    text-align: center;
+    font-size: 1.3em;
+    width: 10%;
+    /*background-color: #0000FF;*/
+    transform: translate(40%);
+}
+/*#text2{*/
+/*    transform: translate(0,20%);*/
+/*}*/
+/*#button1{*/
+/*    transform: translate(0,75%);*/
+/*}*/
+#form_bg .register{
+    position: absolute;
+    font-weight: bold;
+    font-size: 1.2em;
+    right: 3%;
+    bottom: 2%;
+}
+.tip{
+    color: red;
+    width: 80%;
+    text-align: left;
+    /*display: none;*/
+}
